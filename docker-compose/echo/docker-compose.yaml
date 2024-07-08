@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  print:
+    image: echo:v1
+    restart: unless-stopped
+    container_name: echo

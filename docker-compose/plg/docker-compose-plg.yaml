@@ -1,0 +1,46 @@
+version: '3'
+
+networks:
+  loki:
+
+services:
+  loki:
+    image: grafana/loki:2.9.2
+    container_name: loki
+    restart: no
+    ports:
+      - "3100:3100"
+    volumes:
+      - /opt/plg/loki/config:/etc/loki/config
+      - /opt/plg/loki/index:/opt/loki/index
+      - /opt/plg/loki/chunks:/opt/loki/chunks
+    user: "0"
+    command: -config.file=/etc/loki/config/loki-config.yaml
+    networks:
+      - loki
+
+  promtail:
+    image: grafana/promtail:2.9.2
+    container_name: promtail
+    restart: no
+    volumes:
+      - /opt/plg/promtail/config:/etc/promtail/config
+      - /opt/plg/promtail/logs:/logs
+      - /opt/plg/promtail/tmp:/tmp
+      - /opt/xx:/var/logs/xx  # 业务日志所在路径
+    user: "0"
+    command: -config.file=/etc/promtail/config/promtail-config.yaml
+    networks:
+      - loki
+
+  grafana:
+    image: grafana/grafana:10.2.0
+    container_name: grafana
+    restart: no
+    ports:
+      - "3000:3000"
+    volumes:
+      - /opt/plg/grafana/lib:/var/lib/grafana
+    user: "0"
+    networks:
+      - loki

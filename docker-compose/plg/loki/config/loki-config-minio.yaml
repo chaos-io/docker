@@ -1,0 +1,14 @@
+auth_enabled: false
+server:
+http_listen_port: 3100
+grpc_listen_port: 9096
+common:
+path_prefix: /tmp/loki
+#  storage:
+#    filesystem:
+#      chunks_directory: /tmp/loki/chunks
+#      rules_directory: /tmp/loki/rulesreplication_factor: 1ring:instance_addr: 0.0.0.0kvstore:store: inmemoryquery_range:results_cache:cache:
+#      embedded_cache:
+#        enabled: true
+#        distributed: true
+#        max_size_mb: 100storage_config:aws:# Note: use a fully qualified domain name, like localhost.# full example: http://loki:supersecret@localhost.:9000s3: http://miniotest:miniotest@192.168.16.128:9000/lokis3forcepathstyle: trueboltdb_shipper:active_index_directory: /tmp/loki/boltdb-shipper-activecache_location: /tmp/loki/boltdb-shipper-cachecache_ttl: 24# Can be increased for faster performance over longer query periods, uses more disk spaceshared_store: s3schema_config:configs:- from: 2020-10-24store: boltdb-shipperobject_store: awsschema: v11index:prefix: index_period: 24hchunks:prefix: chunks_period: 24hruler:alertmanager_url: http://localhost:9093

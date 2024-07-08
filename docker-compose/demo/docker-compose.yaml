@@ -1,0 +1,19 @@
+version: '3'
+networks:
+  xxx-network:
+    driver: bridge
+
+services:
+  xxx-server:
+    image: xxx-server:latest
+    restart: unless-stopped
+    ports:
+      - "21101:21101"
+      - "21102:21102"
+      - "21103:21103"
+    networks:
+      - xxx-network
+    volumes:
+      - /opt/xxx/xxx-server:/opt/xxx/logs
+      - /opt/xxx/configs:/opt/xxx/configs
+    container_name: xxx-server
